@@ -211,22 +211,56 @@ fun main(){
 
         }
         5->{
-            var nom=""
+            var nombre=""
             var precio=0.0f
             var stock=0
+            var producto_seleccionado=-1
             var productos= mutableListOf<Producto>()
             var new_producto:Producto
             var parar=false
             while(!parar) {
-                println("1.Nuevo PRODUCTO  -  2.Seleccionar PRODUCTO  - 3.Lista de PRODUCTOS  -   4.Eliminar PRODUCTO")
+                println("1.Nuevo PRODUCTO  -  2.Actualizar Strock PRODUCTO  - 3.INVENTARIO")
                 when (readln().toInt()) {
                     1 -> {
                         println("Nuevo PRODUCTO")
+                        println("Nombre: ")
+                        nombre = readln()
+                        println("Precio: ")
+                        precio = readln().toFloat()
+                        println("Stock: ")
+                        stock = readln().toInt()
+                        new_producto = Producto(nombre, precio, stock)
+                        productos += new_producto
                     }
-                    2->{
+                    2 -> {
+                        println("Actualizar Strock PRODUCTO")
+                        println("Nombre: ")
+                        nombre = readln()
 
+                        for(i in productos){
+                            if(i.nom.equals(nombre)){
+                                println(i.toString())
+                                producto_seleccionado=productos.indexOf(i)
+                                break
+                            }
+                            else println("No encontrado")
+                            break
+                        }
+                        if(producto_seleccionado!=-1){
+                            println("Nuevo stock: ")
+                            stock = readln().toInt()
+                            productos[producto_seleccionado].stock=stock
+                            println("Stock actualizado")
+                            println(productos[producto_seleccionado])
+                            producto_seleccionado=-1
+                        }
                     }
-
+                    3->{
+                        println("INVENTARIO")
+                        for(i in productos){
+                            println(i.toString())
+                        }
+                    }
 
                 }
             }
