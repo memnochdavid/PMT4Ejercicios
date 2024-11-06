@@ -1,5 +1,4 @@
 package com.example.pmt4ejercicios
-import kotlin.math.max
 
 fun main(){
     var ejercicio=-1
@@ -12,43 +11,33 @@ fun main(){
             sistema solar la cual tendrá una lista de planetas y los métodos .planetaMayor() que
             devuelve el planeta de mayor masa, .planetaMenor() que devuelve el planeta de menor
             masa y .masaMedia() que devuelve la masa media de los planetas del sistema solar.*/
-
-            class Planeta(var nombre: String ="", var tipo:String, var masa:Float=0.0f)
-
-            class SistemaSolar(val planetas:List<Planeta>){
-                fun planetaMayor():Planeta{
-                    var masa_mayor=planetas[0].masa
-                    for(i in planetas){
-                        if(i.masa>masa_mayor) return i
-                    };throw Exception("fuck")
-                }
-                fun planetaMenor():Planeta{
-                    var masa_menor=planetas[0].masa
-                    for(i in planetas){
-                        if(i.masa<masa_menor) return i
-                    };throw Exception("fuck")
-                }
-                fun masaMedia():Float{
-                    var suma=0.0f
-                    for(i in planetas){
-                        suma+=i.masa
-                    }
-                    return suma/planetas.size
-                }
-            }
+            var planetas= mutableListOf<Planeta>()
+            planetas+=Planeta("Mercurio","Rocoso",0.33f)
+            planetas+=Planeta("Venus","Rocoso",4.87f)
+            planetas+=Planeta("Tierra","Rocoso",5.97f)
+            planetas+=Planeta("Marte","Rocoso",0.642f)
+            planetas+=Planeta("Jupiter","Gaseoso",1898f)
+            planetas+=Planeta("Saturno","Gaseoso",568f)
+            planetas+=Planeta("Urano","Gaseoso",86.8f)
+            planetas+=Planeta("Neptuno","Gaseoso",102f)
+            var SistemaSolar=SistemaSolar(planetas)
+            println("Los planetas del Sistema Solar son:")
+            println(SistemaSolar.toString())
+            println("\nEl planeta mas grande es:")
+            println(SistemaSolar.planetaMayor().toString())
+            println("\nEl planeta mas pequeño es:")
+            println(SistemaSolar.planetaMenor().toString())
+            println("\nLa masa media de los planetas es:")
+            println(SistemaSolar.masaMedia())
         }
         2->{
             /*Ejercicio 2. Crear la clase triangulo. Propiedades: longitud de los tres lados, perímetro,
             tipo de triángulo (isósceles, escaleno o equilátero). Implementar el metodo rectangulo():Boolean
             que calcula si el triángulo es rectángulo. Nota (se parte de la
             hipótesis de que la longitud de los lados dados crean un triángulo)*/
-            class triangulo(var a:Int=1, var b:Int=1, var c:Int=1,
-                            var perim:Float= (a+b+c).toFloat(),
-                            var tipo:String
-            )
-
-
-
+            println(triangulo(3,4,5).toString())//Escaleno y rectangulo
+            println(triangulo(3,3,6).toString())//Isosceles
+            println(triangulo(3,3,3).toString())//Equilatero
         }
         3->{
             var contactos= mutableListOf<Contacto>()
@@ -267,14 +256,62 @@ fun main(){
 
 
         }
-
-
     }
 
+}
+//Ej01 - Clase Planeta y Sistema Solar
+class Planeta(var nombre: String ="", var tipo:String, var masa:Float=0.0f){
 
+    override fun toString(): String {
+        return "Nombre: $nombre, Tipo: $tipo, Masa: $masa"
+    }
+}
 
+class SistemaSolar(val planetas:List<Planeta>){
+    fun planetaMayor():Planeta{
+        var masa_mayor=planetas[0]
+        for(i in planetas){
+            if(i.masa>masa_mayor.masa) masa_mayor=i
+        };return masa_mayor
+    }
+    fun planetaMenor():Planeta{
+        var masa_menor=planetas[0]
+        for(i in planetas){
+            if(i.masa<masa_menor.masa) masa_menor=i
+        };return masa_menor
+    }
+    fun masaMedia():Float{
+        var suma=0.0f
+        for(i in planetas){
+            suma+=i.masa
+        }
+        return suma/planetas.size
+    }
+    override fun toString(): String {
+        return "Planetas: ${planetas.joinToString("\n")}"
+    }
+}
 
+//Ej02 - Clase Triangulo
+class triangulo(var a:Int=1, var b:Int=1, var c:Int=1, var perim:Float=0.0f, var tipo:String=""){
 
+    init{
+        if(a==b && b==c) tipo="Equilatero"
+        else if(a==b || b==c || a==c) tipo="Isosceles"
+        else tipo="Escaleno"
+
+        perim=(a+b+c).toFloat()
+    }
+
+    fun rectangulo(a:Int,b:Int,c:Int):Boolean{
+        var lados=mutableListOf<Int>(a,b,c)
+        lados=lados.sortedDescending().toMutableList()
+        return (lados[0] * lados[0] == lados[1] * lados[1] + lados[2] * lados[2])
+    }
+
+    override fun toString(): String {
+        return "Lados: $a, $b, $c, Perimetro: $perim, Tipo: $tipo, Rectangulo: ${rectangulo(a,b,c)}"
+    }
 }
 
 //Ej03 - Clase Contacto
