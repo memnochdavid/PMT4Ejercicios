@@ -300,6 +300,10 @@ fun main(){
                 }
                 println("Masa media: ${suma/planetas.size}")
             }
+            11->{
+                /*Ejercicio 11. Crea la clase equipo de fútbol que contenga el nombre y país del equipo*/
+                println("Este ejercicio sólo consistía en crear la clase.")
+            }
             12->{
                 /*Ejercicio 12. Crea una lista con 16 equipos de fútbol de países distintos (no puede
                 haber más de cuatro equipos por país)*/
