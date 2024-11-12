@@ -3,6 +3,7 @@ package com.example.pmt4ejercicios
 fun main(){
     var ejercicio=-1
     var planetas= mutableListOf<Planeta>()//se comparte en los ejercicios 1 y 6
+    var equipos= mutableListOf<Equipo>()//ejercicios 11 y 12
     while(true){
         println("Elige un ejercicio a ejecutar: (cero, rompe)")
         ejercicio=readln().toInt()
@@ -293,10 +294,43 @@ fun main(){
             }
             10->{
                 /*Ejercicio 10. Muestra por pantalla la masa media de los planetas del sistema solar*/
-
-
+                var suma=0.0f
+                for(i in planetas){
+                    suma+=i.masa
+                }
+                println("Masa media: ${suma/planetas.size}")
+            }
+            12->{
+                /*Ejercicio 12. Crea una lista con 16 equipos de fútbol de países distintos (no puede
+                haber más de cuatro equipos por país)*/
+                equipos+=Equipo("Real Madrid","España")
+                equipos+=Equipo("Barcelona","España")
+                equipos+=Equipo("Atlético Madrid","España")
+                equipos+=Equipo("Sevilla","España")
+                equipos+=Equipo("Manchester United","Inglaterra")
+                equipos+=Equipo("Manchester City","Inglaterra")
+                equipos+=Equipo("Liverpool","Inglaterra")
+                equipos+=Equipo("PSG","Francia")
+                equipos+=Equipo("Marseille","Francia")
+                equipos+=Equipo("Lyon","Francia")
+                equipos+=Equipo("Juventus","Italia")
+                equipos+=Equipo("Milan","Italia")
+                equipos+=Equipo("Inter","Italia")
+                equipos+=Equipo("Bayern","Alemania")
+                equipos+=Equipo("Dortmund","Alemania")
+                equipos+=Equipo("Borussia Dortmund","Alemania")
+                println("Lista de equipos:")
+                println("${equipos}")
+            }
+            13->{
+                /*Ejercicio 13. Crea la función championsLeague() que recibe como entrada la lista con
+                los 16 equipos y muestra por pantalla un sorteo de octavos* de final de la Champions.
+                *(no tengas en cuenta que equipos de un mismo país no pueden enfrentarse) */
+                println("Sorteo de octavos de final de la Champions:")
+                championsLeague(equipos)
 
             }
+
         }
     }
 
@@ -379,4 +413,34 @@ class Producto(var nom:String, var precio:Float, var stock:Int){
         return "Nombre: $nom, Precio: $precio, Stock: $stock"
     }
 }
+
+//Ej11
+class Equipo(var nom:String, var pais:String){
+    override fun toString(): String {
+        return "Nombre: $nom, Pais: $pais\n"
+    }
+}
+
+//Ej13
+fun championsLeague(equipos:List<Equipo>){
+    var encuentros=equipos.shuffled().toMutableList()//crea una copia aleatoria de la lista
+    var por_parejas=0//controla si ya se han realizado todas las parejas
+    var i=0//controla el indice de la lista de encuentros
+    if(equipos.isEmpty()){
+        println("No hay equipos. Ejecuta primero el ejercicio 12.\n")
+        return
+    }
+    else{
+        while(por_parejas<4){
+            while(i in 0..encuentros.size-1){//imprime los equipos en parejas. Básicamente crea parejas de 2 en 2 con la lista de encuentros
+                println("${encuentros[i].nom} vs ${encuentros[i+1].nom}")//imprime los nombres de los equipos
+                i+=2
+            }
+            por_parejas+=2
+        }
+    }
+}
+
+
+
 
