@@ -4,6 +4,10 @@ fun main(){
     var ejercicio=-1
     var planetas= mutableListOf<Planeta>()//se comparte en los ejercicios 1 y 6
     var equipos= mutableListOf<Equipo>()//ejercicios 11 y 12
+    var videojuegos= mutableListOf<Videojuego>()//Ejercicios 20 y 21
+    var años= mutableListOf<Int>()//Ejercicio 21
+    var plataformas= mutableListOf<String>()//Ejercicio 21
+
     while(true){
         println("Elige un ejercicio a ejecutar: (cero, rompe)")
         ejercicio=readln().toInt()
@@ -435,11 +439,70 @@ fun main(){
                 que dada una lista de juegos, una año y una plataforma devuelve los juegos de la lista de
                 dicho año y plataforma. La función también debe poder usarse especificando solo el año
                 o solo la plataforma.*/
+                videojuegos+=Videojuego("The Last of Us Part II",2020,"PS4")
+                videojuegos+=Videojuego("The Legend of Zelda: Breath of the Wild",2017,"Nintendo Switch")
+                videojuegos+=Videojuego("Super Mario Odyssey",2017,"Nintendo Switch")
+                videojuegos+=Videojuego("God of War",2018,"PS4")
+                videojuegos+=Videojuego("The Witcher 3: Wild Hunt",2015,"PC")
+                videojuegos+=Videojuego("The Elder Scrolls V: Skyrim",2011,"PC")
+                videojuegos+=Videojuego("Animal Crossing: New Horizons",2020,"Nintendo Switch")
+                videojuegos+=Videojuego("Red Dead Redemption 2",2018,"PS4")
+
+                println("Introduce un año:(cero para omitir) ")
+                var año=0
+                año=readln().toInt()
+                println("Introduce una plataforma:(enter para dejar vacío) ")
+                var plataforma=readln()
+                if(año==0 && plataforma=="\n")
+                    println(listaJuegos20(videojuegos))//imprime todo
+                else if(año==0)
+                    println(listaJuegos20(videojuegos,null,plataforma))//imprime por plataforma
+                else if(plataforma=="")
+                    println(listaJuegos20(videojuegos,año,null))//imprime por año
+            }
+            21->{
+                /*Ejercicio 21. Crear una función que dada una lista de videojuegos, lista de años y lista de
+                plataformas devuelva los juegos de la lista que fueron creados en esos años y para esas
+                plataformas. La función debe poder usarse si solo se especifica la lista de años o la lista
+                de plataformas. */
+                videojuegos+=Videojuego("The Last of Us Part II",2020,"PS4")
+                videojuegos+=Videojuego("The Legend of Zelda: Breath of the Wild",2017,"Nintendo Switch")
+                videojuegos+=Videojuego("Super Mario Odyssey",2017,"Nintendo Switch")
+                videojuegos+=Videojuego("God of War",2018,"PS4")
+                videojuegos+=Videojuego("The Witcher 3: Wild Hunt",2015,"PC")
+                videojuegos+=Videojuego("The Elder Scrolls V: Skyrim",2011,"PC")
+                videojuegos+=Videojuego("Animal Crossing: New Horizons",2020,"Nintendo Switch")
+                videojuegos+=Videojuego("Red Dead Redemption 2",2018,"PS4")
+
+                años+=2015
+                años+=2017
+                años+=2018
+                //años+=2020 //se omite uno de los años de la lista para comprobar que funciona - OK!!
+
+                plataformas+= "Nintendo Switch"
+                plataformas+= "PC"
+                plataformas+= "PS4"
+
+                println(listaJuegos21(videojuegos,años,plataformas))
+            }
+            22->{
+                /*Ejercicio 22. Crea una función que reciba una lista de juegos y devuelva un mapa
+                donde las claves sean las plataformas y el valor el número de juegos para dicha
+                plataforma.*/
+
+                videojuegos+=Videojuego("The Last of Us Part II",2020,"PS4")
+                videojuegos+=Videojuego("The Legend of Zelda: Breath of the Wild",2017,"Nintendo Switch")
+                videojuegos+=Videojuego("Super Mario Odyssey",2017,"Nintendo Switch")
+                videojuegos+=Videojuego("God of War",2018,"PS4")
+                videojuegos+=Videojuego("The Witcher 3: Wild Hunt",2015,"PC")
+                videojuegos+=Videojuego("The Elder Scrolls V: Skyrim",2011,"PC")
+                videojuegos+=Videojuego("Animal Crossing: New Horizons",2020,"Nintendo Switch")
+                videojuegos+=Videojuego("Red Dead Redemption 2",2018,"PS4")
+
+                var mapa=listaToMap(videojuegos)
+                println(mapaToString(mapa))
 
             }
-
-
-
         }
     }
 
@@ -731,3 +794,84 @@ class Mago(nombre:String, pv:Int, pm:Int, lvl:Int):Pnj(nombre, pv, pm, lvl){
 }
 
 //Ej20
+open class Videojuego( var nombre:String, var año:Int, var plataforma:String){
+    override fun toString(): String {
+        return "Nombre: $nombre, Año: $año, Plataforma: $plataforma\n"
+    }
+}
+fun listaJuegos20(juegos:List<Videojuego>, año:Int?=null, plataforma:String?=null):List<Videojuego>{
+    var lista= mutableListOf<Videojuego>()
+    for(i in juegos) {
+        if (año != null && plataforma != null) {
+            if (i.año == año && i.plataforma == plataforma) lista += i
+        } else if (año != null) {
+            if (i.año == año) lista += i
+        } else if (plataforma != null) {
+            if (i.plataforma == plataforma) lista += i
+        }
+    }
+    return lista
+}
+
+//Ej21
+fun listaJuegos21(juegos:List<Videojuego>, años:List<Int>?=null, plataformas:List<String>?=null):List<Videojuego>{
+    var lista= mutableListOf<Videojuego>()
+    for(i in juegos) {
+        if (años != null && plataformas != null) {
+            if (años.contains(i.año) && plataformas.contains(i.plataforma)) lista += i
+        } else if (años != null) {
+            if (años.contains(i.año)) lista += i
+        } else if (plataformas != null) {
+            if (plataformas.contains(i.plataforma)) lista += i
+        }
+    }
+    return lista
+}
+
+//Ej22
+fun listaToMap(juegos:List<Videojuego>):Map<String,Int> {
+    var mapa = mutableMapOf<String, Int>()
+    for (i in juegos) {
+        if (mapa.containsKey(i.plataforma)) {
+            mapa[i.plataforma] = mapa[i.plataforma]!! + 1
+        } else mapa[i.plataforma] = 1
+    }
+    return mapa
+}
+fun mapaToString(mapa:Map<String,Int>):String{
+    var cadena=""
+    for(i in mapa){
+        cadena+="Plataforma: ${i.key}, Juegos: ${i.value}\n"
+    }
+    return cadena
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
