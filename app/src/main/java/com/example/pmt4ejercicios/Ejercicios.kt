@@ -334,6 +334,111 @@ fun main(){
                 championsLeague(equipos)
 
             }
+            14->{
+                /*Ejercicio 14: Crea la clase circunferencia. El constructor primario recibirá el
+                radio de la circunferencia y el secundario recibirá la posición del centro de la
+                circunferencia y un punto cualquiera de la misma. Crear el método longitud()
+                y sobrecargar el método toString() de forma que muestre toda la info de la
+                circunferencia*/
+                var circulo=Circunferencia(5.0f)
+                println(circulo.toString())
+            }
+            15->{
+                /*Ejercicio 15: Crea la clase Círculo que hereda de circunferencia. Tendrá dos
+                constructores, el primero recibirá el radio y el color del círculo y el segundo
+                su centro, un punto cualquiera y su color. Crear el método área() y
+                sobrecargar el método toString() de forma que muestre toda la info de la
+                circunferencia*/
+
+                var circulo=Circulo(5.0f,"rojo")
+                println(circulo.toString())
+            }
+            16->{
+                /*Ejercicio 16: Clase de matemáticas. Crea una clase Matemáticas con métodos para realizar
+                operaciones matemáticas como sumar, restar, multiplicar y dividir. Luego, utiliza esta clase en tu
+                programa principal.
+                */
+                var a=0
+                var b=0
+                println("Introduce dos numeros:")
+                a=readln().toInt()
+                b=readln().toInt()
+                var mat=Matematicas(a,b)
+                println("Suma: ${mat.sumar(a,b)}")
+                println("Resta: ${mat.restar(a,b)}")
+                println("Multiplicacion: ${mat.multiplicar(a,b)}")
+                if(mat.dividir(a,b)==-1){
+                    println("División: No se puede dividir por cero")
+                }
+                else{
+                    println("DivisiOn: ${mat.dividir(a,b)}")
+                }
+            }
+            17->{
+                /*Ejercicio 17: Implementa las siguientes clases:
+                    clase Nota. Una nota contiene un identificador numérico y una línea de texto. Define
+                    constructor, accedentes y toString.
+                    clase NotaAlarma. Una nota que además contiene la hora en la que sonará la alarma. Define
+                    constructor, accedentes y toString.
+                    clase BlocNotas que modela un bloc de notas en el que se pueden introducir notas, listar
+                    todas las notas, eliminar una nota mediante su posición en el bloc de notas o saber cuantas
+                    notas contiene el bloc de notas. Debes utilizar una colección.
+                    clase Prueba que cree un bloc de Notas de ejemplo y pruebe las operaciones que soporta.*/
+                var prueba=Prueba()
+                prueba.prueba()
+            }
+            18->{
+                /*Define una jerarquía de clases que permita almacenar datos sobre los
+                planetas y satélites que forman parte del sistema solar (junto con el sol).
+                Algunos atributos que puede ser interesante recoger son: la masa del
+                cuerpo, su diámetro medio, el período de rotación sobre el propio eje,
+                período de traslación alrededor del cuerpo que orbitan, distancia media a
+                ese cuerpo, excentricidad de la órbita, etc.
+                Define un método que, dado un objeto del sistema solar (planeta o satélite),
+                imprima toda la información de que se dispone sobre el mismo.*/
+
+                var sol= Estrella("Sol",1.0f,1.0f,1.0f,1.0f,1.0f,1.0f,"Amarilla")
+                var tierra=Planeta18("Tierra",1.0f,1.0f,1.0f,1.0f,1.0f,1.0f,sol)
+                var luna=Satelite("Luna",1.0f,1.0f,1.0f,1.0f,1.0f,1.0f,tierra)
+                println(luna.toString())
+            }
+            19->{
+                /*Ejercicio 19
+                Crea la clase PNJ que representa un personaje en un juego de rol.
+                La clase tendrá los atributos, nombre, PV –Puntos de Vida-, PM
+                –Puntos mágicos- y LVL. Crea las clases hijas de PNJ Guerrero y
+                Mago. Dichas clases implementarán el método levelUp() que
+                incrementa el atributo LVL del personaje y sus atributos PV y MP.
+                Los guerreros por cada nuevo nivel tendrán un 8% más de PV y un
+                1% más de PM mientras que los magos tendrán un 4% más de PV y
+                un 3% más de PM. Crear un guerrero de nivel 1 con 400PV y 50PM y
+                un mago de nivel 1 con 1600PV y 150PM. Partiendo del hecho de
+                que ambos personajes subirán de nivel siempre a la vez ¿en qué
+                nivel el guerrero tendrá más PV que el mago? */
+
+                var guerrero=Guerrero("Guerrero",400,50,1)
+                var mago=Mago("Mago",1600,150,1)
+                while(guerrero.lvl==mago.lvl){
+                    guerrero.LvlUp()
+                    mago.LvlUp()
+                    if(guerrero.pv>mago.pv){
+                        println("El guerrero tiene más PV. Lo ha superado en el Nivel ${guerrero.lvl}")
+                        println(guerrero.toString())
+                        println(mago.toString())
+                        break
+                    }
+                }
+            }
+            20->{
+                /*Ejercicio 20. Crea la clase de datos Videojuego, que tendrá nombre, año y plataforma del
+                juego. Crea una lista con 8 videojuegos de tres plataformas distintas. Crea una función
+                que dada una lista de juegos, una año y una plataforma devuelve los juegos de la lista de
+                dicho año y plataforma. La función también debe poder usarse especificando solo el año
+                o solo la plataforma.*/
+
+            }
+
+
 
         }
     }
@@ -445,6 +550,184 @@ fun championsLeague(equipos:List<Equipo>){
     }
 }
 
+//Ej14
+open class Circunferencia(var radio:Float=0.0f){//open para que la clase Circulo pueda heredar de ella
+    constructor(
+        x:Float,
+        y:Float,
+        centro:List<Float>
+    ):this()
 
+        fun longitud():Float{
+            return (2*Math.PI*radio).toFloat()
+        }
 
+        override fun toString(): String {
+            return "Radio: $radio, Longitud: ${longitud()}"
+        }
+}
 
+//Ej15
+class Circulo(radio: Float, val color: String) : Circunferencia(radio) {
+    constructor(centro: List<Float>, x: Float, y: Float, color: String) : this(
+        calculaRadio(centro, x, y),
+        color
+    )
+
+    companion object {
+        fun calculaRadio(centro: List<Float>, x: Float, y: Float): Float {
+            val centerX = centro[0]
+            val centerY = centro[1]
+            return Math.sqrt(Math.pow((x - centerX).toDouble(), 2.0) + Math.pow((y - centerY).toDouble(), 2.0)).toFloat()
+        }
+    }
+
+    fun area( radio: Float): Float {
+        return (Math.PI * Math.pow(radio.toDouble(), 2.0)).toFloat()
+    }
+
+    override fun toString(): String {
+        return "Radio: $radio, Area: ${area(radio)}, color: $color, Longitud: ${longitud()}"
+    }
+}
+
+//Ej16
+class Matematicas(a:Int, b:Int){
+    fun sumar(a:Int,b:Int):Int{
+        return a+b
+    }
+    fun restar(a:Int,b:Int):Int{
+        return a-b
+    }
+    fun multiplicar(a:Int,b:Int):Int{
+        return a*b
+        }
+    fun dividir(a:Int,b:Int):Int{
+        if(b==0){
+            return -1
+        }else return a/b
+    }
+}
+
+//Ej17
+open class Nota(var id:Int, var linea:String){
+    override fun toString(): String {
+        return "ID: $id, Linea: $linea"
+    }
+}
+
+class NotaAlarma(id:Int, linea:String, var hora:String):Nota(id,linea){
+    override fun toString(): String {
+        return "ID: $id, Linea: $linea, Hora: $hora"
+    }
+}
+
+class BlocNotas(var notas:MutableMap<Int, Nota>){//uso una colección, en este caso un MutableMap
+    fun listarNotas(){
+        for(i in notas){
+            println(i.toString())
+        }
+    }
+    fun eliminarNota(key:Int){
+        notas.remove(key)
+    }
+    fun numNotas():Int {
+        return notas.size
+    }
+}
+class Prueba{
+    var bloc=BlocNotas(mutableMapOf())
+    fun prueba() {
+        var stop=false
+        while(!stop){
+            println("¿Desea agregar notas? (s/n)")
+            if(readln()=="s"){
+                println("¿Nota o alarma? (n/a)")
+                when(readln()){
+                    "n"->{
+                        println("ID: ")
+                        var id=readln().toInt()
+                        println("Linea: ")
+                        var linea=readln()
+                        bloc.notas[id]=Nota(id,linea)
+                    }
+                    "a"->{
+                        println("ID: ")
+                        var id=readln().toInt()
+                        println("Linea: ")
+                        var linea=readln()
+                        println("Hora: ")
+                        var hora=readln()
+                        bloc.notas[id]=NotaAlarma(id,linea,hora)
+                    }
+                    else -> println("Opcion no valida")
+                }
+            }
+            println("¿Desea eliminar alguna nota? (s/n)")
+            if(readln()=="s"){
+                println("ID: ")
+                var id=readln().toInt()
+                bloc.eliminarNota(id)
+            }
+            println("¿Desea listar las notas? (s/n)")
+            if(readln()=="s") bloc.listarNotas()
+                println("Numero de notas: ${bloc.numNotas()}")
+
+            println("¿Desea salir? (s/n)")
+            if(readln()=="s") stop=true
+            else stop=false
+        }
+    }
+
+}
+
+//Ej18
+open class Astro(var nombre:String, var masa:Float, var diametro:Float, var periodo_rotacion:Float, var periodo_traslacion:Float, var dist_media:Float, var excentricidad:Float){
+    override fun toString(): String {
+        return "Nombre: $nombre, Masa: $masa, Diametro: $diametro, Periodo de rotacion: $periodo_rotacion, Periodo de traslacion: $periodo_traslacion, Distancia media: $dist_media, Excentricidad: $excentricidad"
+    }
+}
+open class Estrella(nombre:String, masa:Float, diametro:Float, periodo_rotacion:Float, periodo_traslacion:Float, dist_media:Float, excentricidad:Float, var tipo:String?):Astro(nombre, masa, diametro, periodo_rotacion, periodo_traslacion, dist_media, excentricidad){
+    override fun toString(): String {
+        return "Nombre: $nombre, Masa: $masa, Diametro: $diametro, Periodo de rotacion: $periodo_rotacion, Periodo de traslacion: $periodo_traslacion, Distancia media: $dist_media, Excentricidad: $excentricidad, Tipo: $tipo"
+    }
+}
+open class Planeta18(nombre:String, masa:Float, diametro:Float, periodo_rotacion:Float, periodo_traslacion:Float, dist_media:Float, excentricidad:Float, var orbitaEstrella:Estrella?):Estrella(nombre, masa, diametro, periodo_rotacion, periodo_traslacion, dist_media, excentricidad, null){
+    override fun toString(): String {
+        return "Nombre: $nombre, Masa: $masa, Diametro: $diametro, Periodo de rotacion: $periodo_rotacion, Periodo de traslacion: $periodo_traslacion, Distancia media: $dist_media, Excentricidad: $excentricidad, Orbita estrella: $orbitaEstrella"
+    }
+}
+class Satelite(nombre:String, masa:Float, diametro:Float, periodo_rotacion:Float, periodo_traslacion:Float, dist_media:Float, excentricidad:Float, var orbitaPlaneta:Planeta18):Planeta18(nombre, masa, diametro, periodo_rotacion, periodo_traslacion, dist_media, excentricidad, null){
+    override fun toString(): String {
+        return "Nombre: $nombre, Masa: $masa, Diametro: $diametro, Periodo de rotacion: $periodo_rotacion, Periodo de traslacion: $periodo_traslacion, Distancia media: $dist_media, Excentricidad: $excentricidad, Orbita planeta: $orbitaPlaneta"
+    }
+}
+
+//Ej19
+open class Pnj(var nombre:String, var pv:Int, var pm:Int, var lvl:Int){
+    override fun toString(): String {
+        return "Nombre: $nombre, PV: $pv, PM: $pm, LVL: $lvl"
+    }
+}
+class Guerrero(nombre:String, pv:Int, pm:Int, lvl:Int):Pnj(nombre, pv, pm, lvl){
+    fun LvlUp(){
+        lvl++
+        pv+=(pv*0.08).toInt()
+        pm+=(pm*0.01).toInt()
+    }
+    override fun toString(): String {
+        return "Nombre: $nombre, PV: $pv, PM: $pm, LVL: $lvl"
+    }
+}
+class Mago(nombre:String, pv:Int, pm:Int, lvl:Int):Pnj(nombre, pv, pm, lvl){
+    fun LvlUp(){
+        lvl++
+        pv+=(pv*0.04).toInt()
+        pm+=(pm*0.03).toInt()
+    }
+    override fun toString(): String {
+        return "Nombre: $nombre, PV: $pv, PM: $pm, LVL: $lvl"
+    }
+}
+
+//Ej20
